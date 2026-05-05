@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import type { Booking } from '../types/booking';
 
 // --- INTERFACE ---
-interface WebBookingData {
-  id: string;
-  room: string;
-  date: string;
-  time: string;
-  bookedBy: string;
-  status: string;
-}
 
 interface DesktopTableProps {
   onDataChange?: () => void; // Fungsi untuk update angka stats di App.tsx
 }
 
 export const DesktopTable: React.FC<DesktopTableProps> = ({ onDataChange }) => {
-  const [bookings, setBookings] = useState<WebBookingData[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
   // State untuk Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBooking, setSelectedBooking] = useState<WebBookingData | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [formData, setFormData] = useState({
     room: '',
     bookedBy: '',
@@ -42,7 +35,7 @@ export const DesktopTable: React.FC<DesktopTableProps> = ({ onDataChange }) => {
   useEffect(() => { loadData(); }, []);
 
   // --- LOGIKA MODAL ---
-  const openModal = (booking: WebBookingData | null = null) => {
+  const openModal = (booking: Booking | null = null) => {
     if (booking) {
       setSelectedBooking(booking);
       setFormData({
@@ -102,20 +95,20 @@ export const DesktopTable: React.FC<DesktopTableProps> = ({ onDataChange }) => {
   );
 
   return (
-    <div className="bg-slate-50 min-h-screen p-4">
+    <div className="bg-transparent min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
         
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
-              Management <span className="text-indigo-600">Dashboard</span>
-            </h1>
+           <h1 className="text-4xl font-black text-slate-800 tracking-tight">
+           Management <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Dashboard</span>
+          </h1>
             <p className="text-slate-500 mt-1">Sistem Reservasi Real-time MySQL</p>
           </div>
           <button 
             onClick={() => openModal()}
-            className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all active:scale-95"
+           className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-6 py-3 rounded-2xl font-black shadow-xl shadow-indigo-200 transition-all active:scale-95 hover:-translate-y-0.5"
           >
             <span>+</span> Tambah Reservasi
           </button>
@@ -126,7 +119,7 @@ export const DesktopTable: React.FC<DesktopTableProps> = ({ onDataChange }) => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-800 text-slate-200 text-sm uppercase tracking-wider">
+               <tr className="bg-gradient-to-r from-slate-900 to-slate-800 text-slate-200 text-sm uppercase tracking-wider">
                   <th className="p-5 font-semibold">Ruangan</th>
                   <th className="p-5 font-semibold">Pemesan</th>
                   <th className="p-5 font-semibold">Waktu</th>
@@ -135,7 +128,9 @@ export const DesktopTable: React.FC<DesktopTableProps> = ({ onDataChange }) => {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {bookings.map((b) => (
-                  <tr key={b.id} className="hover:bg-indigo-50/30 transition-colors">
+                  <tr 
+                     key={b.id} 
+                     className="hover:bg-indigo-50/30 transition-all duration-200 hover:scale-[1.01]">
                     <td className="p-5 font-bold text-slate-700">{b.room}</td>
                     <td className="p-5 text-slate-600">{b.bookedBy}</td>
                     <td className="p-5 text-slate-500 text-sm">
@@ -146,13 +141,12 @@ export const DesktopTable: React.FC<DesktopTableProps> = ({ onDataChange }) => {
                       <div className="flex justify-center gap-2">
                         <button 
                           onClick={() => openModal(b)}
-                          className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                        >
+                          className="bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 hover:-translate-y-0.5 active:scale-95">
                           📝 Edit
                         </button>
                         <button 
                           onClick={() => handleDelete(b.id)}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                         className="bg-indigo-600 hover:bg-indigo-700 transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
                         >
                           🗑️ Hapus
                         </button>
