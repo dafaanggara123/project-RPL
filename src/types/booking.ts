@@ -1,5 +1,5 @@
 export interface Booking {
-  id: string;
+  id: number;
   room: string;
   date: string;
   time: string;

@@ -1,4 +1,5 @@
 export interface Room{
+    id : string;
     room : string;
     time : string;
     status : string;

@@ -1,3 +1,5 @@
+import React from "react";
+
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -55,7 +57,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, onS
               onChange={(e) => setFormData({...formData, time: e.target.value})}
               placeholder="Contoh: 09:00 - 11:00"
             />
+            <div>
+             <input
+          type="date"
+          className="w-full border rounded-lg px-3 py-2"/>
           </div>
+          </div>
+         
         </div>
 
         <div className="flex gap-3 mt-8">
